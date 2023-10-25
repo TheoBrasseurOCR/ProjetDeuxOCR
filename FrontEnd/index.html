@@ -2,27 +2,26 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<title>Sophie Bluel - Architecte d'intérieur</title> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./assets/donnees.js"></script>
-	<script src="./assets/modale.js"></script>
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li><a href="./login.html">login</a></li>
+			<a href="index.html">projets</a>
+			<a href="index.html#contact">contact</a>
+			<a href="login.html" id="login">login</a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
+	
 </header>
 <main>
 	<section id="introduction">
@@ -37,15 +36,16 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters">
-			<button class="filter__btn filter__btn-id-null filter__btn--active">Tous</button>
-			<button class="filter__btn filter__btn-id-1">Objets</button>
-			<button class="filter__btn filter__btn-id-2">Appartements</button>
-			<button class="filter__btn filter__btn-id-3">Hôtels & restaurants</button>
+		    <h2>Mes Projets</h2>
+		<div class="filtre">
+			<button type="button" id="btnTous" class="bouton-css selected" autofocus>Tous</button>
+			<button type="button" id="btnObjet" class="bouton-css">Objets</button>
+			<button type="button" id="btnAppartement" class="bouton-css">Appartements</button>
+			<button type="button" id="btnHotelRestaurant" class="bouton-css">Hôtels & restaurants</button>
 		</div>
 		<div class="gallery"></div>
 	</section>
+	
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
@@ -69,4 +69,5 @@
 	</nav>
 </footer>
 </body>
+<script src="script.js"></script>
 </html>
