@@ -31,7 +31,6 @@ fetch('http://localhost:5678/api/works')
     
 //FILTRES//
 
-
 // filtreTous//
 function filtreTous(){
 
@@ -63,7 +62,7 @@ bouton.addEventListener('click',filtreObjet);
      
 // filtreAppartements//
 function filtreAppartements(){
-            
+    
     //Display Appartements//
     const elements = document.querySelectorAll('div.gallery figure');
     elements.forEach((element) => {
