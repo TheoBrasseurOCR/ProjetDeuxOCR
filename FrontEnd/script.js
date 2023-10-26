@@ -29,9 +29,9 @@ fetch('http://localhost:5678/api/works')
     });
   });
     
-//FILTRES//
+//FILTRES
 
-// filtreTous//
+// filtreTous
 function filtreTous(){
 
     //Display toute la galerie
@@ -46,7 +46,7 @@ bouton.addEventListener('click',filtreTous);
 // filtreObjet  
 function filtreObjet(){
     
-    //Display Objects//
+    //Display Objects
     const elements = document.querySelectorAll('div.gallery figure');
     elements.forEach((element) => {
       const categoryId = element.getAttribute('category-id');
@@ -60,10 +60,10 @@ function filtreObjet(){
 bouton = document.getElementById('btnObjet');
 bouton.addEventListener('click',filtreObjet);
      
-// filtreAppartements//
+// filtreAppartements
 function filtreAppartements(){
-    
-    //Display Appartements//
+
+    //Display Appartements
     const elements = document.querySelectorAll('div.gallery figure');
     elements.forEach((element) => {
         const categoryId = element.getAttribute('category-id');
@@ -80,7 +80,7 @@ bouton.addEventListener('click',filtreAppartements);
 // filtreHotelsRestaurants  
 function filtreHotelsRestaurants(){
 
-    //Display Hotels & restaurants//
+    //Display Hotels & restaurants
     const elements = document.querySelectorAll('div.gallery figure');
     elements.forEach((element) => {
       const categoryId = element.getAttribute('category-id');
