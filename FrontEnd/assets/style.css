@@ -329,7 +329,7 @@ body {
 
 /* admin */
 
-#admin-logged{
+#admin-logged {
 	width: 100%;
 	background-color: black;
 	display: flex;
@@ -339,31 +339,34 @@ body {
 	height: 50px;
 }
 
-#admin-logged i{
+#admin-logged i {
 	font-size: 1.1em;
 	color: white;
 
 }
-#admin-logged p{
+#admin-logged p {
 	color: white;
 	margin-left: 5px;
 }
 
-#logo-edition{
+#logo-edition {
 	display: flex;
 	align-items: baseline;
 }
 
 /* bouton modifier */
 
-#portfolio-modify{
+#portfolio-modify {
 	display: flex;
 	justify-content: center;
 	align-items: baseline;
 }
 
-#portfolio-modify i{
+#portfolio-modify i {
 	margin-left: 30px;
 	font-size: 1.2em;
 }
-   
+
+#modal-trigger:hover {
+	text-decoration: underline;
+}

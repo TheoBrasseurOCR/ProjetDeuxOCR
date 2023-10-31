@@ -95,7 +95,6 @@ bouton = document.getElementById('btnHotelRestaurant');
 bouton.addEventListener('click',filtreHotelsRestaurants);
 
 //Fonction qui garde le filtre actif
-
 const boutons = document.querySelectorAll('.bouton-css');
 
 boutons.forEach((bouton) => {

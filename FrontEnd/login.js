@@ -5,7 +5,7 @@ const element = {
     submit: document.querySelector("#submitUserInfo"),
 };
 
-// Au clic sur le bouton login
+// Au clic sur le bouton se connecter
 let boutonLogin = element.submit.addEventListener("click", (event) => {
     event.preventDefault();
 

@@ -19,7 +19,6 @@ if (JSON.parse(sessionStorage.getItem("isConnected"))) {
     adminStatus.style.display = 'none'
     portfolioModify.style.display = 'none'
     filtreModify.style.display = 'flex'
-
 }
 
 // Déconnexion lors du clic sur logout 
