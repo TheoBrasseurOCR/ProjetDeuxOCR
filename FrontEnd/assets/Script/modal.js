@@ -4,27 +4,24 @@ const modalContent = document.querySelector('#modal-content');
 const modalPhoto = document.querySelector('#modal-photo');
 const modalClose = document.querySelector('#modal-close');
 
+// Fonction qui permet d'afficher la modale
 function showModal() {
   modal.style.display = 'block';
 }
 
+// Fonction qui permet de cacher la modale
 function hideModal() {
   modal.style.display = 'none';
 }
 
-modalContent.addEventListener('click', function(e) {
-  e.stopPropagation();
-});
-modalPhoto.addEventListener('click', function(e) {
-  e.stopPropagation();
-});
-
+// Ferme la modale lors du click sur la croix
 modalClose.addEventListener('click', hideModal);
 
 // Categories 
 const selectCategory = document.getElementById('modal-photo-category');
 
-const reponseCategory = fetch('http://localhost:5678/api/categories')
+// Appel de l'API + categories en fin d'url
+const reponseCategory = fetch(api + 'categories')
 .then((response) => response.json())
 .then((data) => {
   data.forEach((category) => {
@@ -44,22 +41,29 @@ const newPhotoBtn = document.querySelector('#new-photo');
 const returnBtn = document.querySelector('#modal-return');
 const modalPhotoClose = document.querySelector("#modal-photo-close");
 
-
+// Au click sur le bouton...
 newPhotoBtn.addEventListener('click', function() {
+  // modalContent n'est plus visible
   modalContent.style.display = 'none';
+  // afin de laisser apparaitre modalPhoto
   modalPhoto.style.display = 'block';
 });
 
+// Au click sur le bouton retour...
 returnBtn.addEventListener('click', function(){
+  // modalContent est de nouveau visible
   modalContent.style.display = 'flex';
+  // modalPhoto n'est plus visible
   modalPhoto.style.display = 'none';
 })
 
+// Au click sur la croix, ne plus rendre visible la modal
 modalPhotoClose.addEventListener('click', hideModal);
 
 // Ajout de work à la modale
 const imagesModalContainer = document.querySelector('.gallery-modal')
 
+// Fonction creatModalWorkFigure
 function createModalWorkFigure(work) {
   const figure = document.createElement('figure')
   const figureCaption = document.createElement('figcaption')
@@ -76,7 +80,7 @@ function createModalWorkFigure(work) {
   figure.appendChild(figureCaption)
   figure.appendChild(deleteIcon)
 
-  // Ajout d'un delet event lors du clic sur la poubelle
+  // Ajout d'un delete event lors du clic sur la poubelle
   deleteIcon.addEventListener('click', (event) => {
     event.preventDefault();
     deleteWorkById(work.id);
@@ -85,10 +89,13 @@ function createModalWorkFigure(work) {
   return figure;
 }
 
-fetch('http://localhost:5678/api/works')
+// Appel de l'api + works en fin d'url
+fetch(api + 'works')
   .then((response) => response.json())
   .then((data) => {
+    // Pour chaque work...
     data.forEach((work) => {
+      // Création d'une ModalWorkFigure
       const figure = createModalWorkFigure(work);
       imagesModalContainer.appendChild(figure);
     });
@@ -100,7 +107,9 @@ function deleteWorkById(workId) {
   const token = sessionStorage.getItem("Token");
   const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce travail ?");
   if (confirmation) {
-    fetch(`http://localhost:5678/api/works/${workId}`, {
+    // Appel de l'api + works + le workId ciblé en fin d'url
+    fetch(api + `works/${workId}`, {
+      // method DELETE pour la suppression
       method: 'DELETE',
       headers: {
         "Accept" : 'application/json',
@@ -108,19 +117,24 @@ function deleteWorkById(workId) {
       }
     })
     .then(response => {
-      if (!response.ok){
+      // Si la réponse n'est pas celle attendue pour effectuer la suppression...
+      if (response !== response.ok){
       throw new error ('La supression du travai a echoué.');
     }
     const modalWorkToRemove = document.querySelector(`figure[data-id="${workId}"]`);
+    // Suppression d'un work dans la modale
     if (modalWorkToRemove) {
       modalWorkToRemove.remove();
       
     const galleryWorkToRemove = document.querySelector(`figure[data-id="${workId}"]`);
+    // suppression d'un work sans la gallery
     if (galleryWorkToRemove) {
         galleryWorkToRemove.remove();
+    // En cas d'erreur
     } else {
         console.error('Élément à supprimer non trouvé dans la galerie principale');
       }
+    // En cas d'erreur
     } else {
         console.error('Élément à supprimer non trouvé dans la modale');
     }
@@ -129,26 +143,33 @@ function deleteWorkById(workId) {
   }    
 }  
 
-// Supression de toute la galerie
+// Fonction de supression de toute la galerie
 function deleteGallery() {
   const token = sessionStorage.getItem("Token");
   const galleryWorks = document.querySelectorAll('.gallery-modal figure, .gallery figure');
+  // Cible la gallery entière
   galleryWorks.forEach((galleryWork) => {
     const workId = galleryWork.getAttribute('data-id');
-    fetch(`http://localhost:5678/api/works/${workId}`, {
+    // Appel de l'api + works + le workId ciblé en fin d'url
+    fetch(api + `works/${workId}`, {
+      // method DELETE pour la suppression
       method: 'DELETE',
       headers: {
         "Accept" : 'application/json',
         "Authorization" : `Bearer ${token}`
       }
     });
+    // Suppression de la gallery grace à remove()
     galleryWork.remove();
   });
 }
 
+// Au click du bouton supprimer la galerie
 document.getElementById("delete-gallery").addEventListener("click", function() {
   const confirmation = confirm("Êtes-vous sûr de vouloir supprimer la galerie ?");
+  // Si confirmation...
   if (confirmation) {
+    // delete la gallery
     deleteGallery();
   }
 });
@@ -159,9 +180,13 @@ const categorySelect = document.getElementById('modal-photo-category');
 const imageInput = document.getElementById('image');
 const submitButton = document.getElementById('modal-valider');
 
+// Fonction checkForm
 function checkForm() {
+  // Si les champs requis sont renseignés...
   if (titleInput.value !== '' && categorySelect.value !== '' && imageInput.value !== '') {
+    // changement de couleur de background du bouton
     submitButton.style.backgroundColor = '#1D6154';
+    // Sinon, le bouton reste tel qu'il est
   } else {
     submitButton.style.backgroundColor = '';
     }
@@ -176,6 +201,7 @@ imageInput.addEventListener('change', checkForm);
 const btnValider = document.getElementById("modal-valider");
 btnValider.addEventListener("click", addNewWork);
 
+// Fonction d'ajout d'un nouveau work
 function addNewWork(event) {
   event.preventDefault(); 
 
@@ -184,25 +210,35 @@ function addNewWork(event) {
   const title = document.getElementById("modal-photo-title").value;
   const category = document.getElementById("modal-photo-category").value;
   const image = document.getElementById("image").files[0];
-
-
+  const errForm = document.querySelector(".rempForm"); 
+  // Si les champs requis ne sont pas renseignés
   if(!title || !category || !image) {
-    alert('Veuillez remplir tous les champs du formulaire.')
-    return;
+    // Crée un message d'erreur dans le DOM
+    const p = document.createElement("p");
+    p.innerHTML = "Veuillez remplir tous les champs du formulaire.";
+    errForm.appendChild(p);
   }
 
   // Vérifie si l'image n'excéde pas 4MO
   if (image.size > 4 * 1024 * 1024) {
-    alert("La taille de l'image ne doit pas dépasser 4 Mo.");
-    return;
+    // Si l'image dépasse 4MO, crée un message d'erreur dans le DOM
+    const p = document.createElement("p");
+    p.innerHTML = "La taille de l'image ne doit pas dépasser 4 Mo.";
+    errForm.appendChild(p);
   }
   
+  // Création d'un nouveau FormData
   const formData = new FormData();
+  // Le titre du nouveau FormData devient le titre renseigné
   formData.append("title", title);
+  // La catégorie du nouveau FormData devient la catégorie renseignée
   formData.append("category", category);
+  // L'image du nouveau FormData devient l'image renseignée
   formData.append("image", image);
 
-  fetch("http://localhost:5678/api/works", {
+  // Appel de l'api + works en fin d'url
+  fetch(api + "works", {
+    // Méthode POST permet d'envoyer des datas au serveur
     method: "POST",
     body: formData,
     headers: {
@@ -222,7 +258,6 @@ function addNewWork(event) {
     const galleryModal = document.querySelector('.gallery-modal');
     galleryModal.appendChild(figureModal);
   
-    alert('Le nouveau travail a été ajouté avec succès.');
   })
   .catch(error => console.error(error));
 }
